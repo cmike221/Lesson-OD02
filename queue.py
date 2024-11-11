@@ -3,30 +3,28 @@ class Queue:
         self.items = []
 
     def is_empty(self):
-        return self.items == []
+        return len(self.items) == 0
 
     def enqueue(self, item):
-        self.items.insert(0, item)
+        self.items.append(item)
 
     def dequeue(self):
-        return self.items.pop()
+        if not self.is_empty():
+            return self.items.pop(0)
+        raise IndexError("dequeue from an empty queue")
 
     def size(self):
         return len(self.items)
 
+    def __str__(self):
+        return str(self.items)
 
+
+# Пример использования очереди
 queue = Queue()
-print(queue.is_empty())
-
-queue.enqueue("Действие 1")
-queue.enqueue("Действие 2")
-queue.enqueue("Действие 3")
-queue.enqueue("Действие 4")
-
-print(queue.is_empty())
-print(queue.size())
-print(queue.dequeue())
-print(queue.size())
-print(queue.dequeue())
-print(queue.dequeue())
-print(queue.dequeue())
+queue.enqueue(1)
+queue.enqueue(2)
+queue.enqueue(3)
+print(queue)  # [1, 2, 3]
+print(queue.dequeue())  # 1
+print(queue)  # [2, 3]

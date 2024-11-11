@@ -1,29 +1,46 @@
-class Node():
-    def __init__(self, key):
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
         self.left = None
         self.right = None
-        self.value = key
 
-def insert(root, key):
-    if root is None:
-        return Node(key)
-    else:
-        if root.value < key:
-            root.right = insert(root.right, key)
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = TreeNode(value)
         else:
-            root.left = insert(root.left, key)
+            self._insert_recursively(self.root, value)
 
-    return root
+    def _insert_recursively(self, node, value):
+        if value < node.value:
+            if node.left is None:
+                node.left = TreeNode(value)
+            else:
+                self._insert_recursively(node.left, value)
+        else:
+            if node.right is None:
+                node.right = TreeNode(value)
+            else:
+                self._insert_recursively(node.right, value)
 
-root = Node(70)
+    def inorder_traversal(self, node):
+        if node is not None:
+            self.inorder_traversal(node.left)
+            print(node.value, end=' ')
+            self.inorder_traversal(node.right)
 
-root = insert(root, 30)
-root = insert(root, 56)
-root = insert(root, 89)
-root = insert(root, 45)
-root = insert(root, 60)
-root = insert(root, 73)
-root = insert(root, 98)
-root = insert(root, 84)
 
-print(root)
+# Пример использования бинарного дерева
+bt = BinaryTree()
+bt.insert(5)
+bt.insert(3)
+bt.insert(7)
+bt.insert(2)
+bt.insert(4)
+print("Inorder Traversal: ", end='')
+bt.inorder_traversal(bt.root)  # 2 3 4 5 7
+print()
